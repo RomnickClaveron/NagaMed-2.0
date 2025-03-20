@@ -46,7 +46,7 @@ export default function Appointment() {
     }
   };
 
-  const fetchDoctors = async (clinicId) => {
+  const fetchDoctors = async (clinicId: string) => {
     if (!clinicId) {
       setDoctors([]);
       return;
@@ -101,17 +101,18 @@ export default function Appointment() {
 
   return (
     <>
-      <Stack.Screen options={{ headerShown: false }} />
+
       <KeyboardAwareScrollView
         contentContainerStyle={styles.container}
         enableOnAndroid={true}
         enableAutomaticScroll={true}
         keyboardShouldPersistTaps="handled"
+        
       >
         {/* Title */}
         <Text style={styles.title}>Book an Appointment</Text>
 
-        <View style={styles.formContainer}>
+        <View style={styles.container}>
           {/* Name Input */}
           <View style={styles.inputContainer}>
             <Text style={styles.label}>Your Name</Text>
@@ -160,7 +161,7 @@ export default function Appointment() {
             </View>
           </View>
 
-          
+          {/* Date Picker */}
           <View style={styles.inputContainer}>
             <Text style={styles.label}>Select a Date</Text>
             <TouchableOpacity style={styles.datePicker} onPress={() => setShowDatePicker(true)}>
@@ -182,14 +183,14 @@ export default function Appointment() {
             )}
           </View>
 
-          
+          {/* Reason Input */}
           <View style={styles.inputContainer}>
             <Text style={styles.label}>Reason for Consultation</Text>
             <TextInput
               style={[styles.input, styles.textArea]}
               placeholder="Enter reason"
               value={reason}
-              onChangeText={setReason}
+              onChangeText={(text) => setReason(text)}
               multiline
             />
           </View>
@@ -221,6 +222,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: width * 0.05,
     paddingTop: height * 0.02,
     justifyContent: "flex-start",
+    paddingBottom: 50,
   },
   inputContainer: {
     marginBottom: height * 0.02,
