@@ -1,7 +1,6 @@
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet, Image, TouchableOpacity } from "react-native";
 import { Link } from "expo-router";
-
-
 
 export default function Home() {
   const fullname = "User"; // Replace this with actual user data
@@ -11,17 +10,15 @@ export default function Home() {
     { text: "Health Records", image: require("../assets/images/healthrecords.png"), path: "/Status" },
     { text: "Consult Doctor", image: require("../assets/images/consultdoctor.png"), path: "/Doctors" }
   ];
-  
-  const appointments = [
-    {
-      doctor: "Dr. Marlo Aquino",
-      status: "Appointment confirmed on January 4 at 09:00 AM."
-    },
-    {
-      doctor: "Dr. Marlo Aquino",
-      status: "Appointment request pending for approval."
-    }
-  ];
+
+  const [appointments, setAppointments] = useState([]);
+
+  useEffect(() => {
+    fetch("https://api.example.com/appointments") // Replace with your API endpoint
+      .then(response => response.json())
+      .then(data => setAppointments(data))
+      .catch(error => console.error("Error fetching appointments:", error));
+  }, []);
 
   return (
     <View style={styles.container}>
@@ -93,6 +90,8 @@ const styles = StyleSheet.create({
   },
   boxWrapper: {
     alignItems: "center",
+    boxShadow: "black",
+    shadowOffset: { width: 0, height: 2 },
   },
   boxText: {
     marginTop: 10,
@@ -104,6 +103,9 @@ const styles = StyleSheet.create({
     width: "70%",
     height: "70%",
     resizeMode: "contain",
+    shadowColor: "#000",
+    shadowOpacity: 1.0,
+    shadowOffset: { width: 0, height: 5 },
   },
   header2: {
     flexDirection: "row",
